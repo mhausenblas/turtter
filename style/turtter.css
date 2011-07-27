@@ -1,0 +1,51 @@
+body{
+font-family: 'Open Sans', sans-serif;
+text-align: center;
+background: #fff;
+}
+
+#head {
+font-size: 300%;
+color: #333;
+text-shadow: 2px 2px 4px #333;
+margin: 1em 2em 0 2em;
+}
+
+#space {
+margin: 1em 2em 1em 2em;
+}
+
+#out_turt{
+width: 100%;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+border: 1px solid #9e9e9e;
+font-size: 110%;
+font-family: 'Open Sans', sans-serif;
+color: #333;
+}
+
+#user {
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
+padding: 1em 2em 1em 2em;
+text-align: left;
+background: #f0f0f0;
+}
+
+#in_turt{
+font-size: 165%;
+text-align: left;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+border: 1px solid #9e9e9e;
+}
+
+#help{
+font-size: 80%;
+color: #606060;
+}
