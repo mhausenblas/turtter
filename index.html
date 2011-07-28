@@ -9,13 +9,18 @@
 </head>
 <body>
 	<a href="https://github.com/mhausenblas/turtter"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://d3nwyuy0nl342s.cloudfront.net/img/edc6dae7a1079163caf7f17c60495bbb6d027c93/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub"></a>
+	<div id="signin" title="Sign in to turtter">
+		<div>My URI is ...</div>
+		<input type="text" id="user_uri" size="35" class="text ui-widget-content ui-corner-all" value="http://example.net/anonymous" />
+	</div>
 	<div id="head">turtter</div>
 	<div id="space">
 		<textarea id="out_turt" rows="15" readonly="readonly"></textarea>
+		<div id="user_graph"></div>
 	</div>
 	<div id="user">
-		<input type="text" id="in_turt" size="50" value="" /> <button id="send_turt">send</button>
-		<div id="help">Enter valid <a href="http://www.w3.org/TeamSubmission/turtle/">Turtle</a> statements to communicate. Use 'SELECT ...' to query the space.</div>
+		<input type="text" id="in_turt" size="60" value="" />
+		<div id="help">Enter valid <a href="http://www.w3.org/TeamSubmission/turtle/">Turtle</a> statements to communicate. Hit ENTER to send to space. Use 'SELECT ...' to query the space.</div>
 	</div>
 	<script type="text/javascript" src="lib/jquery-1.6.2.min.js"></script>
 	<script type="text/javascript" src="lib/jquery-ui-1.8.13.custom.min.js"></script>
