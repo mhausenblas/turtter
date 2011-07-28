@@ -29,39 +29,45 @@
 	<script type="text/javascript" src='/_ah/channel/jsapi'></script>
 	<script type="text/javascript" src="/lib/json2.js"></script>
 	<script type='text/javascript'>
-
-	sendMessage = function(path, payload) {
-		if(payload) path += '?t=' + JSON.stringify(payload);
-		var xhr = new XMLHttpRequest();
-		xhr.open('POST', path, true);
-		xhr.send();
+	var clientID = '{{ client }}';
+	var channelID = '{{ channel }}';
+	var socket;
+	 
+	sendMessage = function(postURL) {
+		$.post(postURL, function(data) {
+			console.log('turtter says: message posted ... ');
+		});
 	};
 
 	chat = function(turt) {
-		sendMessage('/chat', turt);
+		sendMessage('/chat?t=' + JSON.stringify(turt) + "&c=" + clientID);
+	}
+	
+	echoMessage = function(turt) {
+		sendMessage('/echo?t=' + JSON.stringify(turt) + "&c=" + clientID);
 	}
 	
 	onOpened = function() {
-		sendMessage('/ping', { data: { useruri : 'unknown', timestamp : 'now', statement : '' } });
+		//sendMessage('/ping', { data: { useruri : 'unknown', timestamp : 'now', statement : '' } });
 	};
 
 	onMessage = function(m) {
-		console.log('RECEIVED: ' + m.data.statement);
-		if(m.data.statement) {
-			$('#out_turt').val($('#out_turt').val() + "\n" + m.data.statement);
+		var d = jQuery.parseJSON(m.data);
+		console.log('RECEIVED: ' + d.statement);
+		if(d.statement) {
+			$('#out_turt').val($('#out_turt').val() + "\n" + d.statement);
 		}
 	}
 
 	openChannel = function() {
-		var token = '{{ token }}';
-		var channel = new goog.appengine.Channel(token);
+		var channel = new goog.appengine.Channel(channelID);
 		var handler = {
 			'onopen': onOpened,
 			'onmessage': onMessage,
 			'onerror': function() {},
 			'onclose': function() {}
 		};
-		var socket = channel.open(handler);
+		socket = channel.open(handler);
 		socket.onopen = onOpened;
 		socket.onmessage = onMessage;
 	}
