@@ -1,0 +1,15 @@
+application: turtter-space
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /lib
+  static_dir: lib
+- url: /style
+  static_dir: style
+- url: /.*
+  script: turtter-space.py
+
+inbound_services:
+- channel_presence
