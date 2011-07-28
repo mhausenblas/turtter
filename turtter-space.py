@@ -29,15 +29,17 @@ class TurtterSpaceChatHandler(webapp.RequestHandler):
 				pass
 			else:
 				channel.send_message(tcl, payload)
-				logging.info(' SENDING to client %s' %(tcl))
+				# logging.info(' SENDING to client %s' %(tcl))
 
-class TurtterSpaceEchoHandler(webapp.RequestHandler):
+class TurtterSpaceJoinHandler(webapp.RequestHandler):
 	def post(self):
 		payload = self.request.get('t')
 		sender = self.request.get('c')
 		current_turt = simplejson.loads(payload)
-		logging.info('{%s} ECHOING %s to user <%s>:' %(sender, current_turt['data']['statement'], current_turt['data']['useruri']))
-		channel.send_message(sender, payload)
+		logging.info('{%s} BROADCASTING %s from user <%s>:' %(sender, current_turt['data']['statement'], current_turt['data']['useruri']))
+		for tcl in tclients:
+			channel.send_message(tcl, payload)
+			logging.info(' SENDING to client %s' %(tcl))
 
 class SpacePage(webapp.RequestHandler):
 	def get(self):
@@ -52,7 +54,7 @@ class SpacePage(webapp.RequestHandler):
 application = webapp.WSGIApplication([
 	('/', SpacePage),
 	('/chat', TurtterSpaceChatHandler),
-	('/echo', TurtterSpaceEchoHandler)
+	('/join', TurtterSpaceJoinHandler)
 	], debug=True)
 
 

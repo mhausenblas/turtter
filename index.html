@@ -20,8 +20,8 @@
 		<div id="user_graph"></div>
 	</div>
 	<div id="user">
-		<input type="text" id="in_turt" size="60" value="" />
-		<div id="help">Enter valid <a href="http://www.w3.org/TeamSubmission/turtle/">Turtle</a> statements to communicate. Hit ENTER to send to space. Use 'SELECT ...' to query the space.</div>
+		<input type="text" id="in_turt" size="80" value="" />
+		<div id="help">Enter valid <a href="http://www.w3.org/TeamSubmission/turtle/">Turtle</a> statements to communicate. Hit ENTER to send to space. Use 'SELECT' to query the space (hint: click on the personal space graph URI ;)</div>
 	</div>
 	<script type="text/javascript" src="/lib/jquery-1.6.2.min.js"></script>
 	<script type="text/javascript" src="/lib/jquery-ui-1.8.13.custom.min.js"></script>
@@ -43,23 +43,27 @@
 		sendMessage('/chat?t=' + JSON.stringify(turt) + "&c=" + clientID);
 	}
 	
-	echoMessage = function(turt) {
-		sendMessage('/echo?t=' + JSON.stringify(turt) + "&c=" + clientID);
+	joinSpace = function(turt) {
+		sendMessage('/join?t=' + JSON.stringify(turt) + "&c=" + clientID);
 	}
 	
 	onOpened = function() {
-		//sendMessage('/ping', { data: { useruri : 'unknown', timestamp : 'now', statement : '' } });
 	};
 
 	onMessage = function(m) {
-		var d = jQuery.parseJSON(m.data);
-		console.log('RECEIVED: ' + d.statement);
-		if(d.statement) {
-			$('#out_turt').val($('#out_turt').val() + "\n" + d.statement);
+		var d = JSON.parse(m.data);
+		console.log('RECEIVED: ' + d.data.statement);
+		if(d.data.statement) {
+			if(d.data.statement == 'JOIN'){
+				$('#out_turt').val($('#out_turt').val() + '{' + d.data.useruri + '} has joined the space ...\n');
+			}
+			else {
+				$('#out_turt').val($('#out_turt').val() +  d.data.timestamp + ' {' + d.data.useruri + '}: ' +  d.data.statement + '\n');
+			}
 		}
 	}
 
-	openChannel = function() {
+	initChannel = function() {
 		var channel = new goog.appengine.Channel(channelID);
 		var handler = {
 			'onopen': onOpened,
@@ -70,11 +74,7 @@
 		socket = channel.open(handler);
 		socket.onopen = onOpened;
 		socket.onmessage = onMessage;
-	}
-
-	initialize = function() {
-		openChannel();
-	}      
+	} 
 	</script>
 	<script type="text/javascript" src="/lib/turtter.js"></script>
 </body>
