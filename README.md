@@ -6,6 +6,11 @@
 
 Idea by [Aidan](http://www.deri.ie/about/team/member/Aidan_Hogan#me) and [Michael](http://www.deri.ie/about/team/member/Michael_Hausenblas#me).
 
+
+## To do
+
+* Nathan suggest websockets ([jQuery](http://code.google.com/p/jquery-websocket/), [GAE](http://code.google.com/appengine/docs/python/channel/overview.html))
+
 ## License
 
 Public domain.
